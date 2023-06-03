@@ -27,6 +27,18 @@ class InventorysDataTable extends DataTable
                     "id" => $query->id,
                 ]);
             })
+            ->editColumn('kapasitasi_mesin', function ($query) {
+                return $query->kapasitasi_mesin . ' Liter';
+            })
+            ->editColumn('waktu_pencucian', function ($query) {
+                return $query->waktu_pencucian . ' Jam';
+            })
+            ->editColumn('perkiraan_air', function ($query) {
+                return $query->perkiraan_air . ' Liter';
+            })
+            ->editColumn('is_active', function ($query) {
+                return $query->is_active ? 'Aktif' : 'Tidak Aktif';
+            })
             ->setRowId('id');
     }
 
