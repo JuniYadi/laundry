@@ -35,6 +35,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
 
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Dashboard') }}</a>
+                            </li>
+                        @endauth
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -84,6 +90,8 @@
 
         @include('layouts.footer')
     </div>
+
+    @stack('scripts')
 </body>
 
 </html>
