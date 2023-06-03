@@ -28,10 +28,10 @@ class InventorysDataTable extends DataTable
                 ]);
             })
             ->editColumn('kapasitasi_mesin', function ($query) {
-                return $query->kapasitasi_mesin . ' Liter';
+                return $query->kapasitasi_mesin . ' Kg';
             })
             ->editColumn('waktu_pencucian', function ($query) {
-                return $query->waktu_pencucian . ' Jam';
+                return $query->waktu_pencucian . ' Menit';
             })
             ->editColumn('perkiraan_air', function ($query) {
                 return $query->perkiraan_air . ' Liter';
