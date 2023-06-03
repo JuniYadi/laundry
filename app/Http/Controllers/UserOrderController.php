@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class UserOrderController extends Controller
 {
@@ -14,11 +15,13 @@ class UserOrderController extends Controller
             "nomorTelpon" => "required|numeric"
         ]);
 
+        $calculator = Order::calculation($request->input('beratPakaian'));
+
         if ($validate) {
             return response()->json([
                 "success" => true,
                 "message" => "Berhasil membuat order",
-                "request" => $request->all()
+                "request" => $calculator
             ]);
         } else {
             return response()->json([
