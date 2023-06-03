@@ -22,7 +22,11 @@ class InventorysDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'layouts.actions')
+            ->addColumn('action', function ($query) {
+                return view('layouts.actions', [
+                    "id" => $query->id,
+                ]);
+            })
             ->setRowId('id');
     }
 
@@ -64,12 +68,15 @@ class InventorysDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('nama_mesin'),
-            Column::make('created_at'),
+            Column::make('kapasitasi_mesin'),
+            Column::make('waktu_pencucian'),
+            Column::make('perkiraan_air'),
+            Column::make('is_active'),
             Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(60)
+                ->width(100)
                 ->addClass('text-center'),
         ];
     }

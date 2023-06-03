@@ -37,7 +37,11 @@
 
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Dashboard') }}</a>
+                                <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Dashboard') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white"
+                                    href="{{ route('inventorys.index') }}">{{ __('Inventorys') }}</a>
                             </li>
                         @endauth
 

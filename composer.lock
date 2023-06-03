@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fbe15335c3f8954c84b83266f20b252b",
+    "content-hash": "6fc464b9c12141bdadaaa26cdbb3761c",
     "packages": [
         {
             "name": "brick/math",
@@ -973,6 +973,44 @@
                 }
             ],
             "time": "2021-10-07T12:57:01+00:00"
+        },
+        {
+            "name": "krmpesan/sdk",
+            "version": "v3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KrmPesan/SDK-PHP.git",
+                "reference": "536b1ea90bcf3937be92ae466fe4017f846bb4cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KrmPesan/SDK-PHP/zipball/536b1ea90bcf3937be92ae466fe4017f846bb4cb",
+                "reference": "536b1ea90bcf3937be92ae466fe4017f846bb4cb",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "KrmPesan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KrmPesan",
+                    "email": "support@krmpesan.com"
+                }
+            ],
+            "description": "kirim pesan sdk php",
+            "homepage": "https://github.com/KrmPesan/SDK-PHP",
+            "support": {
+                "issues": "https://github.com/KrmPesan/SDK-PHP/issues",
+                "source": "https://github.com/KrmPesan/SDK-PHP"
+            },
+            "time": "2023-05-23T08:10:20+00:00"
         },
         {
             "name": "laravel/framework",
