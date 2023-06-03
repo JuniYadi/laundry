@@ -22,7 +22,7 @@ class InventorySeeder extends Seeder
                 "kapasitasi_mesin" => 10,
                 "waktu_pencucian" => 25,
                 "perkiraan_air" => 150,
-                "is_active" => true,
+                "is_active" => false,
                 "is_express" => false,
                 "created_at" => $now,
                 "updated_at" => $now,
