@@ -19,22 +19,41 @@
                                 membuat laundry menjadi se-mudah yang seharusnya.</p>
                         </div>
                         <div class="col-md-10 mx-auto col-lg-5">
-                            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="POST"
+                                action="{{ route('order.store') }}">
+                                @csrf
+
                                 <div class="form-floating mb-3">
-                                    <input type="number" class="form-control" id="beratPakaian" placeholder="1">
+                                    <input type="number" class="form-control" name="beratPakaian" id="beratPakaian"
+                                        placeholder="1">
                                     <label for="beratPakaian">Berat Pakaian (Kg)</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <select class="form-control" id="paketLaundry">
-                                        <option value="0">Pilih Paket Laundry Anda</option>
-                                        <option>Cuci Kering (Rp. 5.000/Kg)</option>
-                                        <option>Cuci Kering Kilat (Rp. 7.500/Kg)</option>
-                                        <option>Cuci Kering Express (Rp. 10.000/Kg)</option>
+                                    <select class="form-control" id="paketLaundry" name="paketLaundry">
+                                        <option value="">Pilih Paket Laundry Anda</option>
+
+                                        @foreach ($packages as $package)
+                                            <option value="{{ $package->id }}">{{ $package->nama }} - Rp.
+                                                {{ $package->harga }}/Kg - {{ $package->estimasi_pengerjaan }} Jam</option>
+                                        @endforeach
+
                                     </select>
                                     <label for="paketLaundry">Paket Laundry</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="nomorTelpon" placeholder="Nomor Telpon">
+                                    <input type="text" class="form-control" name="nomorTelpon" id="nomorTelpon"
+                                        placeholder="Nomor Telpon">
                                     <label for="nomorTelpon">Nomor Telpon Anda</label>
                                 </div>
                                 <button class="w-100 btn btn-lg btn-primary" type="submit">Order</button>

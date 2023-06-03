@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $orders = Order::count();
+        $inventories = Inventory::count();
+
+        return view('home', [
+            "total_orders" => $orders,
+            "total_inventories" => $inventories,
+        ]);
     }
 }
