@@ -83,7 +83,7 @@ cp .env.example .env
 ### Generate APP Key
 
 ```
-php artisan key
+php artisan key:generate
 ```
 
 ### Create DB and Seeds Data
