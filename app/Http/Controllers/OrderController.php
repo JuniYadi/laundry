@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\OrderLogs;
 use Illuminate\Http\Request;
+use KrmPesan\ClientV3;
 
 class OrderController extends Controller
 {
@@ -75,6 +76,23 @@ class OrderController extends Controller
             "order_id" => $order->id,
             "status" => $status
         ]);
+
+        $orderId = (string) $order->id;
+
+        if (env('WA_NOTIFICATION')) {
+            $wa = new ClientV3([
+                "tokenFile" => storage_path('app')
+            ]);
+
+            $statusDesc = config('state')[$status];
+
+            $wa->sendMessageTemplateText(
+                $order->customer->phone,
+                'info_order_laundry_done',
+                'id',
+                [$orderId, $statusDesc, env('APP_URL') . "/order/" . $orderId],
+            );
+        }
 
         return response()->json([
             "status" => "success"

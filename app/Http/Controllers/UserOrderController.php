@@ -78,23 +78,18 @@ class UserOrderController extends Controller
             "status" => "WAITING",
         ]);
 
-        $wa = new ClientV3([
-            "tokenFile" => storage_path('app')
-        ]);
+        if (env('WA_NOTIFICATION')) {
+            $wa = new ClientV3([
+                "tokenFile" => storage_path('app')
+            ]);
 
-        $wa->sendMessageTemplateText(
-            $phone,
-            'info_order_laundry',
-            'id',
-            [$orderId, env('APP_URL') . "/order/" . $orderId],
-        );
-
-        // $wa->sendMessageTemplateText(
-        //     $phone,
-        //     'info_order_laundry_done',
-        //     'id',
-        //     ['12345', 'Selesai dan Sudah Bisa Di Ambil', env('APP_URL') . "/order/1234"],
-        // );
+            $wa->sendMessageTemplateText(
+                $phone,
+                'info_order_laundry',
+                'id',
+                [$orderId, env('APP_URL') . "/order/" . $orderId],
+            );
+        }
 
         return redirect()->route('order.show', $order->id);
     }
