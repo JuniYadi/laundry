@@ -28,6 +28,8 @@ class Order extends Model
     public $casts = [
         "is_paid" => "boolean",
         "is_refund" => "boolean",
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function customer()

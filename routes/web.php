@@ -34,3 +34,4 @@ Route::post('/order', [App\Http\Controllers\UserOrderController::class, 'store']
 Route::get('/order/{id}', [App\Http\Controllers\UserOrderController::class, 'show'])->name('order.show');
 
 Route::resource('/inventorys', App\Http\Controllers\InventoryController::class);
+Route::resource('/orders', App\Http\Controllers\OrderController::class);

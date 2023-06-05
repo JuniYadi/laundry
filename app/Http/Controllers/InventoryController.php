@@ -10,11 +10,21 @@ use App\Models\Inventory;
 class InventoryController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(InventorysDataTable $dataTables)
     {
-        return $dataTables->render('layouts.tables');
+        return $dataTables->render('layouts.tables', ['title' => 'Inventorys']);
     }
 
     /**

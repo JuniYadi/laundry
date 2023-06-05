@@ -76,11 +76,26 @@
                     <div class="card-header">{{ __('Order Tracking') }}</div>
 
                     <div class="card-body">
-                        <ul class="list-group">
+
+                        @if ($order->status !== 'DONE')
+                            <p class="fw-bold">Estimasi pakaian anda akan selesai dalam
+                                {{ timecalc($order->created_at, $order->estimasi) }}
+                            </p>
+                        @else
+                            <p class="fw-bold">Kami bersihkan pakaian anda dalam waktu
+                                {{ diffTime($order->created_at, $order->updated_at) }} anda melakukan order di kami. Terima
+                                Kasih atas kepercayannya.
+                            </p>
+                        @endif
+
+
+
+                        <ul class="list-group flex-column-reverse">
                             @foreach ($order->logs as $log)
                                 <li class="list-group-item @if ($loop->last) {{ __('active') }} @endif">
                                     [{{ \Carbon\Carbon::parse($log->created_at)->format('d-M-Y h:i:s') }}]
-                                    {{ config('state')[$log->status] }}</li>
+                                    {{ config('state')[$log->status] }} -
+                                    {{ \Carbon\Carbon::parse($log->created_at)->fromNow() }}</li>
                             @endforeach
                         </ul>
                     </div>

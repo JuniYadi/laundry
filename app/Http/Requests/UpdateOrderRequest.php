@@ -11,7 +11,9 @@ class UpdateOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        if ($this->user()->can('karyawan') xor $this->user()->can('admin')) {
+            return true;
+        }
     }
 
     /**

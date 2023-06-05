@@ -22,7 +22,25 @@ class OrdersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'orders.action')
+            ->editColumn('action', function ($query) {
+                return view('layouts.status', [
+                    "id" => $query->id,
+                    "status" => $query->status,
+                    "iron" => $query->package->is_setrika
+                ]);
+            })
+            ->editColumn('status', function ($query) {
+                return config('state')[$query->status];
+            })
+            ->editColumn('berat_pakaian', function ($query) {
+                return $query->berat_pakaian . ' Kg';
+            })
+            ->editColumn('total_harga', function ($query) {
+                return rupiah($query->total_harga);
+            })
+            ->editColumn('updated_at', function ($query) {
+                return \Carbon\Carbon::parse($query->updated_at)->diffForHumans();
+            })
             ->setRowId('id');
     }
 
@@ -31,7 +49,8 @@ class OrdersDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()
+            ->with(['customer', 'package', 'inventory']);
     }
 
     /**
@@ -40,20 +59,19 @@ class OrdersDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('orders-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('orders-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(0)
+            ->buttons([
+                // Button::make('excel'),
+                // Button::make('csv'),
+                // Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -62,15 +80,19 @@ class OrdersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
+            Column::make('customer.phone'),
+            Column::make('package.nama')->title('Paket'),
+            Column::make('berat_pakaian'),
+            Column::make('total_harga'),
+            Column::make('inventory.nama_mesin')->title('Mesin'),
+            Column::make('status'),
             Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(150)
+                ->addClass('text-center'),
         ];
     }
 
