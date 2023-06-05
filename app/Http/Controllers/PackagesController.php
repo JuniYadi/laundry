@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\PackagesDataTable;
 use App\Http\Requests\StorePackagesRequest;
 use App\Http\Requests\UpdatePackagesRequest;
 use App\Models\Packages;
@@ -21,9 +22,9 @@ class PackagesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PackagesDataTable $dataTables)
     {
-        //
+        return $dataTables->render('layouts.tables', ['title' => 'Packages']);
     }
 
     /**

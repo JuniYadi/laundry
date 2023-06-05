@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Package;
+use App\Models\Packages;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -22,14 +22,33 @@ class PackagesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'packages.action')
+            ->addColumn('action', function ($query) {
+                return view('layouts.actions', [
+                    "id" => $query->id,
+                ]);
+            })
+            ->editColumn('is_setrika', function ($query) {
+                return $query->is_setrika ? 'Ya' : 'Tidak';
+            })
+            ->editColumn('is_express', function ($query) {
+                return $query->is_express ? 'Ya' : 'Tidak';
+            })
+            ->editColumn('harga', function ($query) {
+                return rupiah($query->harga);
+            })
+            ->editColumn('estimasi_pengerjaan', function ($query) {
+                return $query->estimasi_pengerjaan . ' Jam';
+            })
+            ->editColumn('updated_at', function ($query) {
+                return \Carbon\Carbon::parse($query->updated_at)->diffForHumans();
+            })
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Package $model): QueryBuilder
+    public function query(Packages $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -40,20 +59,20 @@ class PackagesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('packages-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('packages-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            // ->selectStyleSingle()
+            ->buttons([
+                // Button::make('excel'),
+                // Button::make('csv'),
+                // Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -62,15 +81,18 @@ class PackagesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
+            Column::make('nama'),
+            Column::make('harga'),
+            Column::make('estimasi_pengerjaan'),
+            Column::make('is_setrika')->title('Setrika'),
+            Column::make('is_express')->title('Express'),
             Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(100)
+                ->addClass('text-center'),
         ];
     }
 

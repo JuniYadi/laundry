@@ -61,7 +61,7 @@ class InventorysDataTable extends DataTable
             ->minifiedAjax()
             // ->dom('Bfrtip')
             ->orderBy(0)
-            ->selectStyleSingle()
+            // ->selectStyleSingle()
             ->buttons([
                 // Button::make('excel'),
                 // Button::make('csv'),

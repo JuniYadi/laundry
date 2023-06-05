@@ -35,3 +35,4 @@ Route::get('/order/{id}', [App\Http\Controllers\UserOrderController::class, 'sho
 
 Route::resource('/inventorys', App\Http\Controllers\InventoryController::class);
 Route::resource('/orders', App\Http\Controllers\OrderController::class);
+Route::resource('/packages', App\Http\Controllers\PackagesController::class);
