@@ -29,6 +29,8 @@ Auth::routes([
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/order', [App\Http\Controllers\UserOrderController::class, 'index'])->name('order.index');
 Route::post('/order', [App\Http\Controllers\UserOrderController::class, 'store'])->name('order.store');
+Route::get('/order/{id}', [App\Http\Controllers\UserOrderController::class, 'show'])->name('order.show');
 
 Route::resource('/inventorys', App\Http\Controllers\InventoryController::class);

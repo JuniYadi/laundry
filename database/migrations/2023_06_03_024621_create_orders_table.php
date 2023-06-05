@@ -15,9 +15,18 @@ return new class extends Migration
             $table->id();
             $table->integer('customer_id');
             $table->integer('package_id');
+            $table->integer('inventory_id');
+            $table->integer('karyawan_id')->nullable();
+            $table->integer('berat_pakaian');
             $table->integer('total_harga');
             $table->integer('estimasi');
+            $table->integer('waktu_pencucian');
+            $table->integer('penggunaan_air');
             $table->string('status');
+            $table->boolean('is_paid')->default(false);
+            $table->boolean('is_refund')->default(false);
+            $table->integer('refund_amount')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }
