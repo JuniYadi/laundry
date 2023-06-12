@@ -25,12 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $orders = Order::count();
-        $inventories = Inventory::count();
+        $today_revenue = Order::whereDate('created_at', date('Y-m-d'))->sum('total_harga');
+        $today_order = Order::whereDate('created_at', date('Y-m-d'))->count();
+        $today_water = Order::select('penggunaan_air')
+            ->join('order_logs', 'order_logs.order_id', '=', 'orders.id')
+            ->where('order_logs.status', 'IN_WASHING')
+            ->whereDate('order_logs.created_at', date('Y-m-d'))->sum('penggunaan_air');
 
-        return view('home', [
-            "total_orders" => $orders,
-            "total_inventories" => $inventories,
-        ]);
+        $monthly_revenue = Order::whereMonth('created_at', date('m'))->where('status', 'DONE')->sum('total_harga');
+
+        return view('home', compact('today_revenue', 'today_order', 'today_water', 'monthly_revenue'));
     }
 }

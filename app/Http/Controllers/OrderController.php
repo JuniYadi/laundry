@@ -70,6 +70,11 @@ class OrderController extends Controller
         $status = $request->input('status');
 
         $order->status = $status;
+
+        if ($status === "DONE") {
+            $order->is_paid = true;
+        }
+
         $order->save();
 
         OrderLogs::create([

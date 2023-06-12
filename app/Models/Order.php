@@ -58,7 +58,7 @@ class Order extends Model
         $inventory = Inventory::where("is_active", false)
             ->when(isset($inventoryId), function ($query, $inventoryId) {
                 return $query->where("id", $inventoryId);
-            })->first();
+            })->inRandomOrder()->first();
 
         $waktu_pencucian_perkilo = $inventory->waktu_pencucian / $inventory->kapasitasi_mesin;
         $penggunaan_air_perkilo = $inventory->perkiraan_air / $inventory->kapasitasi_mesin;
